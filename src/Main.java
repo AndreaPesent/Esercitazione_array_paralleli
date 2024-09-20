@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.stream.StreamSupport;
+
 public class Main{
     public static void main (String[]args)
     {
@@ -35,14 +37,21 @@ public class Main{
                 break;
 
             case 2:
-                LetturaAuto(ListaMarca, ListaModello, ListaPrezzo);
                 for (int i=0;i<10;i++)
                 {
+                    String [] ListaCompleta= LetturaAuto(ListaMarca, ListaModello, ListaPrezzo);
                     System.out.println(ListaCompleta);
                 }
-            {
+            break;
 
-            }
+            case 3:
+                System.out.println("Inserici la marca");
+                Marca=in.nextLine();
+                System.out.println("Inserisci il modello");
+                Modello=in.nextLine();
+                String AutoTrovata=RicercaAuto();
+                System.out.println(AutoTrovata);
+
         }
         } while (opzione!=8);
     }
@@ -58,11 +67,24 @@ public class Main{
     }
     public static String [] LetturaAuto (String [] ListaMarca, String [] ListaModello, double [] ListaPrezzo)
     {
-        String [] ListaCompleta=new String [10];
-        for (int i=0;i<ListaCompleta.length;i++)
+        String [] ListaTOT=new String [10];
+        for (int i=0;i<ListaTOT.length;i++)
         {
-            ListaCompleta[i]=ListaMarca[i] + "," + ListaModello [i] + "," + ListaPrezzo[i];
+            ListaTOT[i]=ListaMarca[i] + "," + ListaModello [i] + "," + ListaPrezzo[i];
         }
-        return ListaCompleta;
+        return ListaTOT;
     }
+    public static String [] RicercaAuto (String Marca, String Modello, String [] ListaTOT)
+    {
+        String [] TrovaAuto=new String [10];
+        for (int i=0;i<ListaTOT.length;i++)
+        {
+            if(Marca==ListaTOT[i] && Modello==ListaTOT[i])
+            {
+                TrovaAuto[i]=Marca + Modello;
+            }
+        }
+        return TrovaAuto;
+    }
+    public static
 }
