@@ -9,8 +9,10 @@ public class Main{
         String Modello="";
         double Prezzo=0;
         int opzione=0;
+        int Indice=0;
         String [] ListaMarca=new String [10];
         String [] ListaModello=new String [10];
+        String [] ListaTOT=new String [10];
         double [] ListaPrezzo=new double[10];
         do
         {
@@ -33,7 +35,7 @@ public class Main{
                 Modello=in.nextLine();
                 System.out.println("Inserisci il prezzo dell'auto");
                 Prezzo=in.nextDouble();
-                AggiuntaAuto(Modello, Marca, Prezzo, ListaModello);
+                AggiuntaAuto(Modello, Marca, Prezzo,ListaModello, ListaMarca, ListaMarca);
                 break;
 
             case 2:
@@ -49,13 +51,17 @@ public class Main{
                 Marca=in.nextLine();
                 System.out.println("Inserisci il modello");
                 Modello=in.nextLine();
-                String AutoTrovata=RicercaAuto();
+                String [] AutoTrovata=RicercaAuto(Marca, Modello, ListaTOT);
                 System.out.println(AutoTrovata);
+                break;
+            case 4:
+                System.out.println("Inserisci l'indice di ove si trova l'auto");
+                Indice=in.nextInt();
 
         }
         } while (opzione!=8);
     }
-    public static void AggiuntaAuto (String Modello, String Marca, double Prezzo, String[] ListaMarca, String[] ListaModello, String[] ListaPrezzo)
+    public static void AggiuntaAuto (String Modello, String Marca, double Prezzo, String[] ListaMarca, String[] ListaModello, double[] ListaPrezzo)
     {
 
         for (int i=0;i<ListaMarca.length;i++)
@@ -86,5 +92,14 @@ public class Main{
         }
         return TrovaAuto;
     }
-    public static
+    public static void CancellaAuto (String [] ListaTOT, int Indice)
+    {
+        for (int i=0;i<ListaTOT.length;i++)
+        {
+            if (i==Indice)
+            {
+                ListaTOT[i]=;
+            }
+        }
+    }
 }
