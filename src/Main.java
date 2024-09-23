@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.StreamSupport;
 
@@ -9,10 +10,10 @@ public class Main{
         String Modello="";
         double Prezzo=0;
         int opzione=0;
-        int Indice=0;
+        int indice=0;
         String [] ListaMarca=new String [10];
         String [] ListaModello=new String [10];
-        String [] ListaTOT=new String [10];
+        String ListaTOT="";
         double [] ListaPrezzo=new double[10];
         do
         {
@@ -29,77 +30,122 @@ public class Main{
             switch (opzione)
         {
             case 1:
+
                 System.out.println("Inserisci la marca dell'auto");
-                Marca=in.nextLine();
+                Marca=in.next();
                 System.out.println("Inserisci il modello dell'auto");
-                Modello=in.nextLine();
+                Modello=in.next();
                 System.out.println("Inserisci il prezzo dell'auto");
                 Prezzo=in.nextDouble();
-                AggiuntaAuto(Modello, Marca, Prezzo,ListaModello, ListaMarca, ListaMarca);
+                AggiuntaAuto(Modello, Marca, Prezzo, ListaMarca, ListaModello, ListaPrezzo,indice);
+                indice++;
                 break;
 
             case 2:
-                for (int i=0;i<10;i++)
-                {
-                    String [] ListaCompleta= LetturaAuto(ListaMarca, ListaModello, ListaPrezzo);
+
+                    String ListaCompleta= LetturaAuto(ListaMarca, ListaModello, ListaPrezzo, indice);
                     System.out.println(ListaCompleta);
-                }
+
             break;
 
             case 3:
                 System.out.println("Inserici la marca");
-                Marca=in.nextLine();
+                Marca=in.next();
                 System.out.println("Inserisci il modello");
-                Modello=in.nextLine();
-                String [] AutoTrovata=RicercaAuto(Marca, Modello, ListaTOT);
+                Modello=in.next();
+                String AutoTrovata=RicercaAuto(Marca, Modello, indice, ListaMarca, ListaModello);
                 System.out.println(AutoTrovata);
                 break;
+
             case 4:
-                System.out.println("Inserisci l'indice di ove si trova l'auto");
-                Indice=in.nextInt();
+                System.out.println("Inserisci l'indice di dove si trova l'auto");
+                indice=in.nextInt();
+                CancellaAuto(ListaTOT, indice);
+                break;
+
+            case 5:
+                break;
+
+            case 6:
+                OrdineCrescente(ListaPrezzo, ListaMarca, ListaModello);
+
+                break;
 
         }
         } while (opzione!=8);
     }
-    public static void AggiuntaAuto (String Modello, String Marca, double Prezzo, String[] ListaMarca, String[] ListaModello, double[] ListaPrezzo)
+    public static void AggiuntaAuto (String Modello, String Marca, double Prezzo, String[] ListaMarca, String[] ListaModello, double[] ListaPrezzo, int indice)
     {
 
-        for (int i=0;i<ListaMarca.length;i++)
-        {
-            ListaMarca[i] = Marca;
-            ListaModello[i] = Modello;
-            ListaPrezzo[i] = Prezzo;
-        }
+
+            ListaMarca[indice] = Marca;
+            ListaModello[indice] = Modello;
+            ListaPrezzo[indice] = Prezzo;
+
     }
-    public static String [] LetturaAuto (String [] ListaMarca, String [] ListaModello, double [] ListaPrezzo)
+    public static String LetturaAuto (String [] ListaMarca, String [] ListaModello, double [] ListaPrezzo, int indice)
     {
-        String [] ListaTOT=new String [10];
-        for (int i=0;i<ListaTOT.length;i++)
+        String ListaTOT="";
+        for (int i=0;i<indice;i++)
         {
-            ListaTOT[i]=ListaMarca[i] + "," + ListaModello [i] + "," + ListaPrezzo[i];
+            ListaTOT+=ListaMarca[i] + "," + ListaModello [i] + "," + ListaPrezzo[i]+"\n";
         }
         return ListaTOT;
     }
-    public static String [] RicercaAuto (String Marca, String Modello, String [] ListaTOT)
+    public static String RicercaAuto (String Marca, String Modello, int indice, String [] arrayMarca, String [] arrayModelli)
     {
-        String [] TrovaAuto=new String [10];
-        for (int i=0;i<ListaTOT.length;i++)
+        String TrovaAuto="";
+        for (int i=0;i<indice;i++)
         {
-            if(Marca==ListaTOT[i] && Modello==ListaTOT[i])
+            if(Marca.equalsIgnoreCase(arrayMarca[i]) && Modello.equalsIgnoreCase(arrayModelli[i]))
             {
-                TrovaAuto[i]=Marca + Modello;
+                TrovaAuto+=Marca + ", " + Modello+"\n";
             }
         }
         return TrovaAuto;
     }
-    public static void CancellaAuto (String [] ListaTOT, int Indice)
+    public static void CancellaAuto (String ListaTOT, int indice)
     {
-        for (int i=0;i<ListaTOT.length;i++)
+        for (int i=0;i<indice;i++)
         {
-            if (i==Indice)
+            if (i==indice)
             {
-                ListaTOT[i]=;
+                ListaTOT="";
             }
+        }
+    }
+    public static void Modifica ()
+    {
+
+    }
+    public static void OrdineCrescente (double [] ListaPrezzo, String [] ListaMarca, String [] ListaModello)
+    {
+        int dim=ListaPrezzo.length;
+        int posMin;
+        double temp;
+        String tempA="";
+        String tempB="";
+        for(int i=0; i<dim-1; i++)
+        {
+            posMin=i;
+            for (int j=i+1; j<dim; j++)
+            {
+                if (ListaPrezzo[j]<ListaPrezzo[posMin])
+                    posMin=j;
+
+                temp=ListaPrezzo[i];
+                ListaPrezzo[i]=ListaPrezzo[posMin];
+                ListaPrezzo[posMin]=temp;
+
+                tempA=ListaMarca[i];
+                ListaMarca[i]=ListaMarca[posMin];
+                ListaMarca[posMin]=tempA;
+
+                tempB=ListaModello[i];
+                ListaModello[i]=ListaModello[posMin];
+                ListaModello[posMin]=tempB;
+            }
+
         }
     }
 }
